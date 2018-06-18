@@ -43,6 +43,7 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-cache')
     compile('org.springframework.session:spring-session-core')
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compile("org.jetbrains.kotlin:kotlin-reflect")
     runtime('org.springframework.boot:spring-boot-devtools')
