@@ -5,7 +5,7 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
-@Entity
+@Entity(name = "games")
 data class Game(@field: Id @field: GeneratedValue val id: Long = 0,
                 val name: String = "",
                 @Column(name="description", length = 512) val description: String = "")
