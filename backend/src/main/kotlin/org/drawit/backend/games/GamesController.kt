@@ -9,7 +9,7 @@ import java.net.URI
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@CrossOrigin(origins = ["http://localhost:8081"])
+@CrossOrigin(origins = ["http://localhost:8080","http://localhost:8081"])
 @RequestMapping("/json/games")
 
 class GamesController(@Autowired private val gameReposiory : GameRepository ) {
