@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div class="grid-container">
+        <img src="./assets/logo.png">
+        <router-view/>
+    </div>
   </div>
 </template>
 
