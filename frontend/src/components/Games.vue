@@ -24,8 +24,10 @@ export default {
   },
 
   created () {
-    fetch('http://localhost:8080/json/games')
-      .then(response => { return response.json() })
+    fetch('http://localhost:9000/json/games')
+      .then(response => {
+        return response.json()
+      })
       .then(json => { this.games = json })
   }
 }
