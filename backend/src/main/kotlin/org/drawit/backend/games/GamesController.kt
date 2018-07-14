@@ -8,56 +8,32 @@ import org.springframework.web.bind.annotation.*
 import java.net.URI
 import javax.servlet.http.HttpServletRequest
 
-import kotlin.text.StringBuilder
-
 @RestController
 @CrossOrigin(origins = ["http://localhost:8080", "http://localhost:8081"])
 @RequestMapping("/json/games")
 
-class GamesController(@Autowired private val gameRepository: GameRepository) {
+class GamesController(@Autowired private val repository: GameRepository) {
 
     @RequestMapping(method = [(RequestMethod.GET)])
     fun query(
-            @RequestParam(value = "id", required = false) id: String,
-            @RequestParam(value = "name", required = false) name: String
+            @RequestParam(value = "id", required = false) id: Long?,
+            @RequestParam(value = "name", required = false) name: String?,
+            @RequestParam(value = "players", required = false) players: Int?
     ): List<Game> {
 
-        /* TODO basic implementation, does not allow combining searches
-        ideally avoid a "else if" tree, perhaps easiest to ignore repository
-        and make the sql query
-        */
         if (id != null) {
-            return gameRepository.findById(id)
+            return listOf(repository.findById(id).get())
         }
 
         if (name != null) {
-            return gameRepository.findByNameContainingIgnoringCase(name)
+            return repository.findByNameContainingIgnoringCase(name)
         }
 
-        // other version, might be slow, doing unions between the lists
-
-        val list = mutableListOf<Game>()
-
-        if (name != null) {
-            val filterList = gameRepository.findByNameContainingIgnoringCase(id) as List<Game>
-            list.filter { game -> filterList.contains(game) }
+        if (players != null) {
+            return repository.findByPlayerCount(players)
         }
 
-        /*...*/
-
-        // third variant, build custom query
-
-        val sb = StringBuilder()
-
-        // TODO use string constants
-        sb.append("SELECT * FROM games WHERE")
-        if (name != null)
-            sb.append("name LIKE $name AND")
-        /*... add more if-clauses for each attribute ...*/
-        sb.removeSuffix(" AND")
-        return gameRepository.stringQuery(sb.toString())
-
-        return gameRepository.findAll()
+        return repository.findAll()
     }
 
     @PostMapping("/create")
@@ -75,7 +51,7 @@ class GamesController(@Autowired private val gameRepository: GameRepository) {
 
         try {
             val game = Game(null, gameName!!, gameDescription!!)
-            gameRepository.save(game)
+            repository.save(game)
             responseHeader.set("Results", "ok")
             return ResponseEntity<String>("Post Results", responseHeader, HttpStatus.CREATED)
         } catch (nex: NullPointerException) {

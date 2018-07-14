@@ -10,10 +10,13 @@ interface CustomGameRepository {
 class CustomGameRepositoryImpl : CustomGameRepository {
 
     @PersistenceContext
-    val em: EntityManager
+    var em: EntityManager? = null
 
     override fun stringQuery(query: String): List<Game> {
-        val q = em.createQuery(query)
-        return q.resultList as List<Game>
+//        val q = em!!.createQuery(query)
+//        return q.resultList as List<Game>
+//
+
+        return em!!.createQuery(query).resultList as List<Game>
     }
 }
