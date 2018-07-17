@@ -26,11 +26,11 @@ class GamesController(@Autowired private val repository: GameRepository) {
         if (id != null)
             sb.append("g.id = $id AND ")
         if (name != null)
-            sb.append("g.name LIKE '$name' AND ")
+            sb.append("g.name LIKE '%$name%' AND ")
         if (players != null)
             sb.append("g.playerMin <= $players AND g.playerMax >= $players AND ")
 
-        val query = sb.removeSuffix(" AND ").toString()
+        val query = sb.removeSuffix(" AND ").removeSuffix(" WHERE   ").toString()
 
         return repository.stringQuery(query)
 
