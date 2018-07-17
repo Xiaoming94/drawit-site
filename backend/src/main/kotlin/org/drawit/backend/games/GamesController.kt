@@ -21,19 +21,19 @@ class GamesController(@Autowired private val repository: GameRepository) {
             @RequestParam(value = "players", required = false) players: Int?
     ): List<Game> {
 
-        if (id != null) {
-            return listOf(repository.findById(id).get())
-        }
+        val sb = StringBuilder()
+        sb.append("SELECT g FROM " + Game::class.java.name + " g WHERE ")
+        if (id != null)
+            sb.append("g.id = $id AND ")
+        if (name != null)
+            sb.append("g.name LIKE '$name' AND ")
+        if (players != null)
+            sb.append("g.playerMin <= $players AND g.playerMax >= $players AND ")
 
-        if (name != null) {
-            return repository.findByNameContainingIgnoringCase(name)
-        }
+        val query = sb.removeSuffix(" AND ").toString()
 
-        if (players != null) {
-            return repository.findByPlayerCount(players)
-        }
+        return repository.stringQuery(query)
 
-        return repository.findAll()
     }
 
     @PostMapping("/create")

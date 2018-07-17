@@ -23,5 +23,4 @@ interface GameRepository : JpaRepository<Game, Long>, CustomGameRepository {
     @Query("select g from #{#entityName} g where g.playerMin <= ?1 and g.playerMax >= ?1")
     fun findByPlayerCount(count: Int): List<Game>
 
-
 }
