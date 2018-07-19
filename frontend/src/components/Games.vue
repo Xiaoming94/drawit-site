@@ -16,6 +16,10 @@
 </template>$
 <script>
 export default {
+  mixins: [
+    // eslint-disable-next-ine
+    require('../mixins/foundation')
+  ],
   name: 'Games',
   data () {
     return {
