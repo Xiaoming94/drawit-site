@@ -15,4 +15,7 @@ export default {
 
 <style lang="scss">
     @import "styles/main.scss";
+    img {
+      width: 20%;
+    }
 </style>
