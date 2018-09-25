@@ -2,7 +2,6 @@
   <div class="card">
     <div class="card-section">
       <h2>{{ title }}</h2>
-      <h3>Description</h3>
       <ul class="inner">
         <li>
           Playtime: {{ gameTime }}
@@ -28,3 +27,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .inner {
+      text-align: left;
+  }
+</style>
